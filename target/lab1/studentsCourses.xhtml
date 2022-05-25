@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head/>
+<h:body>
+    <h2>#{studentsCourses.student.name} #{studentsCourses.student.surname} courses:</h2>
+    <ol>
+        <ui:repeat value="#{studentsCourses.student.courses}" var="course">
+            <li>
+                <h:link value="#{course.name}"  outcome="coursesStudents?courseId=#{course.id}"/>
+                <h:form>
+                    <h:commandButton value="Remove course"
+                                 actionListener="#{studentsCourses.removeCourse(course.id)}"
+                                 action="#{'studentsCourses?faces-redirect=true&amp;studentId='.concat(studentsCourses.student.id)}">
+                    <f:param name="studentId" value="#{studentsCourses.student.id}" />
+                    </h:commandButton>
+                </h:form>
+            </li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText value="#{studentsCourses.courseToAddId}" required="true" />
+        <h:commandButton value="Add course"
+                         actionListener="#{studentsCourses.addCourse()}"
+                         action="#{'studentsCourses?faces-redirect=true&amp;studentId='.concat(studentsCourses.student.id)}">
+            <f:param name="studentId" value="#{studentsCourses.student.id}" />
+        </h:commandButton>
+        <!--h:link outcome="#{'students?studentId='.concat(studentsCourses.student.id)}" value="Back to student page"/-->
+        <h:link outcome="index" value="Back to index page"/>
+
+    </h:form>
+    <h:form>
+        <h:inputText value="#{studentsCourses.courseToRemoveId}" required="true" />
+        <h:commandButton value="Remove course"
+                         actionListener="#{studentsCourses.removeCourseByForm()}"
+                         action="#{'studentsCourses?faces-redirect=true&amp;studentId='.concat(studentsCourses.student.id)}">
+            <f:param name="studentId" value="#{studentsCourses.student.id}" />
+        </h:commandButton>
+        <!--h:link outcome="#{'students?studentId='.concat(studentsCourses.student.id)}" value="Back to student page"/-->
+        <h:link outcome="index" value="Back to index page"/>
+
+    </h:form>
+</h:body>
+</html>
